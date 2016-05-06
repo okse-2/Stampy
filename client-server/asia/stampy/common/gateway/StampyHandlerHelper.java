@@ -99,7 +99,10 @@ public class StampyHandlerHelper {
     String receipt = message.getHeader().getHeaderValue(ClientMessageHeader.RECEIPT);
     ErrorMessage error = new ErrorMessage(StringUtils.isEmpty(receipt) ? "n/a" : receipt);
     error.getHeader().setMessageHeader("Could not execute " + message.getMessageType() + " - " + e.getMessage());
-    getGateway().sendMessage(error.toStompMessage(true), hostPort);
+
+    //This was added to the existing handler so that we can call any interceptors when an error message is sent
+    getGateway().sendMessage(error, hostPort);
+//    getGateway().sendMessage(error.toStompMessage(true), hostPort);
   }
 
   /**
@@ -116,7 +119,10 @@ public class StampyHandlerHelper {
     log.error("Handling error, sending error message to {}", hostPort, e);
     ErrorMessage error = new ErrorMessage("n/a");
     error.getHeader().setMessageHeader(e.getMessage());
-    getGateway().sendMessage(error.toStompMessage(true), hostPort);
+
+    //This was added to the existing handler so that we can call any interceptors when an error message is sent
+    getGateway().sendMessage(error, hostPort);
+//    getGateway().sendMessage(error.toStompMessage(true), hostPort);
   }
 
   /**

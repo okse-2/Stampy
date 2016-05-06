@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import asia.stampy.common.gateway.*;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelHandler.Sharable;
@@ -39,12 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import asia.stampy.common.StampyLibrary;
-import asia.stampy.common.gateway.AbstractStampyMessageGateway;
-import asia.stampy.common.gateway.DefaultUnparseableMessageHandler;
-import asia.stampy.common.gateway.HostPort;
-import asia.stampy.common.gateway.MessageListenerHaltException;
-import asia.stampy.common.gateway.StampyHandlerHelper;
-import asia.stampy.common.gateway.UnparseableMessageHandler;
 import asia.stampy.common.heartbeat.StampyHeartbeatContainer;
 import asia.stampy.common.message.StampyMessage;
 import asia.stampy.common.parsing.StompMessageParser;
@@ -73,6 +68,7 @@ public abstract class StampyNettyChannelHandler extends SimpleChannelUpstreamHan
   private Map<HostPort, Channel> sessions = new ConcurrentHashMap<HostPort, Channel>();
 
   private StampyHandlerHelper helper = new StampyHandlerHelper();
+  private ErrorInterceptor errorInterceptor;
 
   /*
    * (non-Javadoc)
@@ -207,6 +203,9 @@ public abstract class StampyNettyChannelHandler extends SimpleChannelUpstreamHan
   private synchronized void sendMessage(String message, HostPort hostPort, Channel channel) {
     if (channel == null || !channel.isConnected()) {
       log.error("Channel is not connected, cannot send message {}", message);
+      //Added this to be able to handle an error when we cannot send a message.
+      if(errorInterceptor != null)
+        errorInterceptor.onError(new ConnectError("Channel is not connected, cannot send message"));
       return;
     }
 
@@ -385,4 +384,10 @@ public abstract class StampyNettyChannelHandler extends SimpleChannelUpstreamHan
     this.executor = executor;
   }
 
+  /**
+   * Se
+   */
+  public void setErrorInterceptor(ErrorInterceptor interceptor){
+    this.errorInterceptor = interceptor;
+  }
 }
