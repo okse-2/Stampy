@@ -1,0 +1,50 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>asia.stampy</groupId>
+    <artifactId>stampy-examples</artifactId>
+    <packaging>jar</packaging>
+    <name>Stampy Client-Server</name>
+    <version>1.1-okse</version>
+    <url>http://mrstampy.github.com/Stampy/</url>
+    <licenses>
+        <license>
+            <name>GNU Public License, Version 2.0</name>
+            <url>http://www.gnu.org/licenses/gpl-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/mrstampy/Stampy.git</url>
+        <connection>https://github.com/mrstampy/Stampy.git</connection>
+    </scm>
+    <developers>
+        <developer>
+            <id>mrstampy</id>
+            <name>Burt Alexander</name>
+            <email>burt.alexander@gmail.com</email>
+        </developer>
+    </developers>
+    <dependencies>
+        <dependency>
+            <groupId>asia.stampy</groupId>
+            <artifactId>stampy-MINA-client-server-RI</artifactId>
+            <version>1.1-okse</version>
+        </dependency>
+        <dependency>
+            <groupId>asia.stampy</groupId>
+            <artifactId>stampy-NETTY-client-server-RI</artifactId>
+            <version>1.1-okse</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+    </dependencies>
+
+</project>
