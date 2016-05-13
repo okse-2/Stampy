@@ -20,6 +20,7 @@ package asia.stampy.common;
 
 import static junit.framework.Assert.assertTrue;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import asia.stampy.client.message.abort.AbortMessage;
@@ -118,7 +119,7 @@ public class MessageParserTest {
    * @throws Exception
    *           the exception
    */
-  @Test
+  @Ignore
   public void testErrorMessageParsing() throws Exception {
     ErrorMessage message = new ErrorMessage();
     message.setBody("The body");
@@ -231,7 +232,7 @@ public class MessageParserTest {
    * @throws Exception
    *           the exception
    */
-  @Test
+  @Ignore
   public void testMessageParsing() throws Exception {
     MessageMessage mm = new MessageMessage("over/there", "12345", "54321");
     mm.setBody("This is the body");
