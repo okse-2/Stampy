@@ -110,7 +110,10 @@ public class ServerNettyMessageGateway extends AbstractStampyNettyMessageGateway
    */
   @Override
   public void shutdown() throws Exception {
-    if (server == null || !server.isConnected()) return;
+    if (server == null){
+      log.error("Server was null, cannot shutdown!");
+      return;
+    }
     ChannelFuture cf = server.close();
     cf.awaitUninterruptibly();
     server = null;
