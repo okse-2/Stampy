@@ -46,6 +46,7 @@ public class ServerNettyMessageGateway extends AbstractStampyNettyMessageGateway
       Executors.newCachedThreadPool());
 
   private Channel server;
+  private String host;
 
   private ServerBootstrap init() {
     ServerBootstrap bootstrap = new ServerBootstrap(factory);
@@ -75,14 +76,32 @@ public class ServerNettyMessageGateway extends AbstractStampyNettyMessageGateway
   public void connect() throws Exception {
     if (server == null) {
       ServerBootstrap bootstrap = init();
-      server = bootstrap.bind(new InetSocketAddress(getPort()));
-      log.info("Bound to {}", getPort());
+      server = bootstrap.bind(new InetSocketAddress(getHost(), getPort()));
+      log.info("Bound to {}", getHost() + ":" + getPort());
+      log.info(String.valueOf(server.getLocalAddress()), String.valueOf(server.getRemoteAddress()));
     } else if (server.isConnected()) {
       log.warn("Already connected");
     } else {
       log.error("Acceptor in unrecognized state: isBound {}, isConnected {}, ", server.isBound(), server.isConnected());
     }
   }
+
+  /**
+   * Sets the host for the gateway
+   * @param host the host
+   */
+  public void setHost(String host){
+    this.host = host;
+  }
+
+  /**
+   * Gets the host
+   * @return the host for the gateway
+   */
+  public String getHost(){
+    return this.host;
+  }
+
 
   /*
    * (non-Javadoc)
